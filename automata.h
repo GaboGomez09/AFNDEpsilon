@@ -57,7 +57,6 @@ void recorrerEstados(Nodo* nodo, Estado* estadoActual, char* alfabeto, int* esta
   } else {
     posicion = posicionDeCaracter(nodo->cadena[nodo->posicionCadena], alfabeto);
     nodo->posicionCadena++;
-    nodo->posicionRecorrido++;
     while (nodo->siguiente->transiciones[numeroDeDirecciones][posicion] != NULL) {
       numeroDeDirecciones++;
     }
@@ -65,16 +64,7 @@ void recorrerEstados(Nodo* nodo, Estado* estadoActual, char* alfabeto, int* esta
     for (size_t i = 0; i < numeroDeDirecciones; i++) {
       recorrerEstados(clon, nodo->siguiente->transiciones[i][posicion], alfabeto, estadosFinales, estadosFinalesLength);
     }
-    nodo->posicionRecorrido--;
     nodo->posicionCadena--;
-
-
-    int g = 0;
-    while (nodo->siguiente->transiciones[g][31] != NULL) {
-      recorrerEstados(clon, nodo->siguiente->transiciones[g][31], alfabeto, estadosFinales, estadosFinalesLength);
-      g++;
-    }
-    nodo->posicionRecorrido--;
   }
   free(clon);
 }
