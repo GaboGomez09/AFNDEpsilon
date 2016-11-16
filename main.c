@@ -4,12 +4,47 @@
 #include <ctype.h>
 #include "file_reader.h"
 #include "automata.h"
+
+void mostrarAutomata(char *alfabeto, char *transition, int *estados, int estadoInicial, int *estadosFinales, int *estadosOrigen, int *estadosDestino, int estadoLength, int estadosFinalesLength, int origenLength, int destinoLength);
+
 int main(int argc, char const *argv[]){
   char *alfabeto = NULL, *transition = NULL;
   int *estados,  estadoInicial, *estadosFinales,  *estadosOrigen, *estadosDestino;
   int estadoLength, estadosFinalesLength, origenLength, destinoLength;
   LeerArchivo(argv[1], &alfabeto, &transition, &estados, &estadoInicial, &estadosFinales, &estadosOrigen, &estadosDestino, &estadoLength, &estadosFinalesLength, &origenLength, &destinoLength);
 
+  mostrarAutomata(alfabeto, transition, estados, estadoInicial, estadosFinales, estadosOrigen, estadosDestino, estadoLength, estadosFinalesLength, origenLength, destinoLength);
+
+  char cadena[100] = "a";
+  printf("Por favor ingrese la cadena que desea validar.\n");
+  scanf("%s", cadena);
+  Nodo* nodo = NULL;
+  nodo = crearNodo(cadena);
+
+  char *newalfabeto = (char*)malloc(strlen(alfabeto)+1);
+  strcpy(newalfabeto,alfabeto);
+
+  Estado* initialState;
+  Estado* zombie = crearEstado(100);
+  initialState = crearEstados(&zombie, alfabeto, estadoInicial, estados, estadoLength, transition, estadosOrigen, estadosDestino, origenLength, destinoLength);
+
+  recorrerEstados(zombie, nodo, initialState, newalfabeto, estadosFinales, estadosFinalesLength); //solo queda verificar la ultima funcion
+
+  free(zombie);
+  free(initialState);
+  free(newalfabeto);
+  free(alfabeto);
+  free(transition);
+  free(estados);
+  free(estadosFinales);
+  free(estadosDestino);
+  free(estadosOrigen);
+  free(nodo);
+
+  return 0;
+}
+
+void mostrarAutomata(char *alfabeto, char *transition, int *estados, int estadoInicial, int *estadosFinales, int *estadosOrigen, int *estadosDestino, int estadoLength, int estadosFinalesLength, int origenLength, int destinoLength){
   for (size_t i = 0; i < 3; i++) {
     printf("\n");
   }
@@ -64,36 +99,4 @@ int main(int argc, char const *argv[]){
     printf("\n\n");
 
   }
-
-
-
-  char cadena[100] = "a";
-  printf("Por favor ingrese la cadena que desea validar.\n");
-  scanf("%s", cadena);
-  Nodo* nodo = NULL;
-  nodo = crearNodo(cadena);
-
-
-
-  char *newalfabeto = (char*)malloc(strlen(alfabeto)+1);
-  strcpy(newalfabeto,alfabeto);
-
-  Estado* initialState;
-  Estado* zombie = crearEstado(100);
-  initialState = crearEstados(&zombie, alfabeto, estadoInicial, estados, estadoLength, transition, estadosOrigen, estadosDestino, origenLength, destinoLength);
-
-  recorrerEstados(zombie, nodo, initialState, newalfabeto, estadosFinales, estadosFinalesLength); //solo queda verificar la ultima funcion
-
-  free(zombie);
-  free(initialState);
-  free(newalfabeto);
-  free(alfabeto);
-  free(transition);
-  free(estados);
-  free(estadosFinales);
-  free(estadosDestino);
-  free(estadosOrigen);
-  free(nodo);
-
-  return 0;
 }
