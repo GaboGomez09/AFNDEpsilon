@@ -8,7 +8,7 @@ int main(int argc, char const *argv[]){
   char *alfabeto = NULL, *transition = NULL;
   int *estados,  estadoInicial, *estadosFinales,  *estadosOrigen, *estadosDestino;
   int estadoLength, estadosFinalesLength, origenLength, destinoLength;
-  LeerArchivo(&alfabeto, &transition, &estados, &estadoInicial, &estadosFinales, &estadosOrigen, &estadosDestino, &estadoLength, &estadosFinalesLength, &origenLength, &destinoLength);
+  LeerArchivo(argv[1], &alfabeto, &transition, &estados, &estadoInicial, &estadosFinales, &estadosOrigen, &estadosDestino, &estadoLength, &estadosFinalesLength, &origenLength, &destinoLength);
 
   for (size_t i = 0; i < 3; i++) {
     printf("\n");

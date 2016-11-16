@@ -1,14 +1,14 @@
 #ifndef file_reader
 #define file_reader
 
-void LeerArchivo(char **alfabeto, char **transition, int **estados, int *estadoInicial, int **estadosFinales, int **estadosOrigen, int **estadosDestino, int *estadoLength, int *estadosFinalesLength, int *origenLength, int *destinoLength);
+void LeerArchivo(const char* archivoALeer, char **alfabeto, char **transition, int **estados, int *estadoInicial, int **estadosFinales, int **estadosOrigen, int **estadosDestino, int *estadoLength, int *estadosFinalesLength, int *origenLength, int *destinoLength);
 void LeerLinea(char **buffer, FILE *filePointer);
 void ConvertirNumeros(int **arreglo,char *buffer, int *arregloLength);
 void FiltrarCaracteres(char **alfabeto, char *buffer);
 void guardarFuncionesDelta(int **estadosOrigen, int *origenLength,char **transition, int **estadosDestino, int *destinoLength, FILE *apuntadorArchivo);
 
-void LeerArchivo(char **alfabeto, char **transition, int **estados, int *estadoInicial, int **estadosFinales, int **estadosOrigen, int **estadosDestino, int *estadoLength, int *estadosFinalesLength, int *origenLength, int *destinoLength){
-  FILE* apuntadorArchivo = fopen("epsilon.txt", "r");
+void LeerArchivo(const char* archivoALeer, char **alfabeto, char **transition, int **estados, int *estadoInicial, int **estadosFinales, int **estadosOrigen, int **estadosDestino, int *estadoLength, int *estadosFinalesLength, int *origenLength, int *destinoLength){
+  FILE* apuntadorArchivo = fopen(archivoALeer, "r");
   char *buffer;
   if (apuntadorArchivo == NULL) {
     printf("No se pudo abrir el archivo.\n");
