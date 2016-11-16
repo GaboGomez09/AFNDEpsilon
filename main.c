@@ -5,7 +5,7 @@
 #include "file_reader.h"
 #include "automata.h"
 int main(int argc, char const *argv[]){
-  char *alfabeto, *transition;
+  char *alfabeto = NULL, *transition = NULL;
   int *estados,  estadoInicial, *estadosFinales,  *estadosOrigen, *estadosDestino;
   int estadoLength, estadosFinalesLength, origenLength, destinoLength;
   LeerArchivo(&alfabeto, &transition, &estados, &estadoInicial, &estadosFinales, &estadosOrigen, &estadosDestino, &estadoLength, &estadosFinalesLength, &origenLength, &destinoLength);
@@ -79,12 +79,12 @@ int main(int argc, char const *argv[]){
   strcpy(newalfabeto,alfabeto);
 
   Estado* initialState;
+  Estado* zombie = crearEstado(100);
+  initialState = crearEstados(&zombie, alfabeto, estadoInicial, estados, estadoLength, transition, estadosOrigen, estadosDestino, origenLength, destinoLength);
 
-  initialState = crearEstados(alfabeto, estadoInicial, estados, estadoLength, transition, estadosOrigen, estadosDestino, origenLength, destinoLength);
+  recorrerEstados(zombie, nodo, initialState, newalfabeto, estadosFinales, estadosFinalesLength); //solo queda verificar la ultima funcion
 
-
-  recorrerEstados(nodo, initialState, newalfabeto, estadosFinales, estadosFinalesLength); //solo queda verificar la ultima funcion
-
+  free(zombie);
   free(initialState);
   free(newalfabeto);
   free(alfabeto);
